@@ -4,7 +4,7 @@ import '../../../core/utils/app_colors/color_model.dart';
 
 
 
-void showLoadingUi(BuildContext context) {
+void showLoadingUi(BuildContext context,{required String text}) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -19,7 +19,7 @@ void showLoadingUi(BuildContext context) {
               children: [
                 CircularProgressIndicator(color: AppColor.parimerayColor),
                 Text(
-                  "Loading...",
+                  text,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: .w400,

@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:tasky/core/utils/app_colors/color_model.dart';
 import 'package:tasky/core/utils/app_font_size/font_size_model.dart';
 
-class TextFormFeild extends StatefulWidget {
-  TextFormFeild({
+class TextFormFeildWidget extends StatefulWidget {
+  TextFormFeildWidget({
     super.key,
-    required controller,
-    required hintText,
-    required validator,
+    required this.controller,
+    required this.hintText,
+    required this.validator,
     this.suffixIcon,
   });
   IconData? suffixIcon;
 
-  @override
-  State<TextFormFeild> createState() => _TextFormFeildState();
-}
-
-class _TextFormFeildState extends State<TextFormFeild> {
   TextEditingController? controller;
 
   String? hintText;
@@ -24,22 +19,30 @@ class _TextFormFeildState extends State<TextFormFeild> {
   String? Function(String?)? validator;
 
   bool obscureText = false;
+  @override
+  State<TextFormFeildWidget> createState() => _TextFormFeildState();
+}
 
+class _TextFormFeildState extends State<TextFormFeildWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: obscureText,
-      controller: controller,
+      obscureText: widget.obscureText,
+      controller: widget.controller,
 
       decoration: InputDecoration(
-        suffixIcon: IconButton(
-          onPressed: () {
-            !obscureText;
-            setState(() {});
-          },
-          icon: Icon(obscureText ? widget.suffixIcon : Icons.visibility_off),
-        ),
-        hintText: hintText,
+        suffixIcon: widget.suffixIcon != null
+            ? IconButton(
+                onPressed: () {
+                  widget.obscureText = !widget.obscureText;
+                  setState(() {});
+                },
+                icon: Icon(
+                  widget.obscureText ? widget.suffixIcon : Icons.visibility,
+                ),
+              )
+            : null,
+        hintText: widget.hintText,
         hintStyle: TextStyle(
           color: AppColor.hintTextColorAndBorderTextFormFeild,
           fontSize: FontSize.hintFont,
@@ -58,7 +61,7 @@ class _TextFormFeildState extends State<TextFormFeild> {
         ),
         contentPadding: EdgeInsets.all(15),
       ),
-      validator: validator,
+      validator: widget.validator,
     );
   }
 }
