@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tasky/core/network/data/state_model.dart';
+import 'package:tasky/core/network/firebase/firebase_app.dart';
 import 'package:tasky/core/utils/app_colors/color_model.dart';
 import 'package:tasky/core/utils/app_font_size/font_size_model.dart';
 import 'package:tasky/core/widgets/bottom_content.dart';
 import 'package:tasky/core/widgets/text_form_feild_widget.dart';
 import 'package:tasky/features/auth/screens/register_screen.dart';
 import 'package:tasky/features/auth/widget/material_button_widget.dart';
+import 'package:tasky/features/home/screens/home_screen.dart';
 import 'package:tasky/models/validator_model.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,9 +16,10 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController? email;
-  TextEditingController? password;
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -74,8 +78,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 MateralButtonWidget(
                   padding: 144,
                   data: "Login",
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      var result = await FireBase.login(
+                        email: email.text,
+                        password: password.text,
+                      );
+                      switch (result) {
+                        case Success():
+                          Navigator.pushReplacementNamed(
+                            context,
+                            HomeScreen.routeName,
+                          );
+                          break;
+                        case Erorr():
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(result.message)),
+                          );
+                          break;
+                      }
+                      print("RESULT = $result");
+                    }
                   },
                 ),
               ],

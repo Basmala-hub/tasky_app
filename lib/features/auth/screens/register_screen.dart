@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tasky/core/network/data/state_model.dart';
+import 'package:tasky/core/network/firebase/firebase_app.dart';
 import 'package:tasky/core/utils/app_colors/color_model.dart';
 import 'package:tasky/core/utils/app_font_size/font_size_model.dart';
 import 'package:tasky/core/widgets/bottom_content.dart';
 import 'package:tasky/core/widgets/text_form_feild_widget.dart';
+import 'package:tasky/features/auth/data/user_model.dart';
 import 'package:tasky/features/auth/screens/login_screen.dart';
 import 'package:tasky/features/auth/widget/material_button_widget.dart';
 import 'package:tasky/features/home/screens/home_screen.dart';
@@ -17,10 +21,20 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   @override
-  TextEditingController? username;
-  TextEditingController? email;
-  TextEditingController? confirmPassword;
-  TextEditingController? password;
+  late TextEditingController username;
+  late TextEditingController email;
+  late TextEditingController password;
+  late TextEditingController confirmPassword;
+  @override
+  void initState() {
+    super.initState();
+
+    username = TextEditingController();
+    email = TextEditingController();
+    password = TextEditingController();
+    confirmPassword = TextEditingController();
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -68,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(height: 5),
                 TextFormFeildWidget(
-                  controller: username,
+                  controller: email,
                   hintText: "enter email...",
                   validator: (value) {
                     return ValidatorApp.validateEmail(value);
@@ -101,24 +115,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(height: 5),
                 TextFormFeildWidget(
-                  controller: password,
+                  controller: confirmPassword,
                   hintText: "Password...",
                   validator: (value) {
                     return ValidatorApp.validateConfirmPassword(
                       value,
-                      password!.text,
+                      password.text,
                     );
                   },
                   suffixIcon: Icons.visibility_off,
                 ),
                 SizedBox(height: 78),
-
                 MateralButtonWidget(
                   padding: 125,
                   data: "Register",
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).pushNamed(HomeScreen.routeName);
+                      var result = await FireBase.register(
+                        email: email.text,
+                        password: password.text,
+                      );
+                      switch (result) {
+                        case Success():
+                          await FireBase.addUser(
+                            UserdData(
+                              id: FirebaseAuth.instance.currentUser!.uid,
+                              name: username.text,
+                              email: email.text,
+                              password: password.text,
+                            ),
+                          );
+                          Navigator.of(
+                            context,
+                          ).pushNamed(LoginScreen.routeName);
+                          break;
+                        case Erorr():
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(result.message)),
+                          );
+                          break;
+                      }
                     }
                   },
                 ),
