@@ -10,3 +10,7 @@ class HomeSuccessState extends HomeState {
   List<TaskModel>tasks;
   HomeSuccessState(this.tasks);
 }
+class HomeErrorState extends HomeState{
+String massageError;
+HomeErrorState(this.massageError);
+}

@@ -133,7 +133,7 @@ static  Future<List<TaskModel>> searchTasks(String query) async {
   }
 
   //!edit task function
-static  Future<TaskModel> editTask(TaskModel task) async {
+static  Future<void> editTask(TaskModel task) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       throw Exception("User not logged in");
@@ -145,10 +145,8 @@ static  Future<TaskModel> editTask(TaskModel task) async {
           .collection("tasks")
           .doc(task.id);
       await taskModify.update(task.toJson());
-      final updatedTask = await taskModify.get();
-      return TaskModel.fromJson(updatedTask.data()!, updatedTask.id);
     } catch (e) {
-      throw Exception("Error editing task");
+      throw Exception("Error editing task$e");
     }
   }
 
