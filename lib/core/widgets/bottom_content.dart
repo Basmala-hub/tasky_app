@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/core/utils/app_colors/color_model.dart';
 import 'package:tasky/core/utils/app_font_size/font_size_model.dart';
+// ignore: must_be_immutable
 class BottomNavgationContent extends StatelessWidget {
   BottomNavgationContent({super.key, this.fristText, this.secondText,required this.onTap});
 String? fristText;
