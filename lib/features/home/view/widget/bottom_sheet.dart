@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/core/utils/app_colors/color_model.dart';
-import 'package:tasky/core/utils/app_font_size/font_size_model.dart';
 import 'package:tasky/core/utils/assets_icon/icon_model.dart';
-import 'package:tasky/features/home/widget/show_alert_dailog_piriority_widget.dart';
-import 'package:tasky/features/home/widget/show_sate_picker_widget.dart';
+import 'package:tasky/features/home/view/widget/show_alert_dailog_piriority_widget.dart';
+import 'package:tasky/features/home/view/widget/show_sate_picker_widget.dart';
 
 void showModalBottomSheetContinair(
   BuildContext context,

@@ -1,50 +1,40 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TaskModel {
+  final String id;
+  final String title;
+  final String description;
+  final bool isDone;
+  final DateTime createdAt;
+  final int priority;
+
   TaskModel({
+    required this.id,
     required this.title,
     required this.description,
     required this.isDone,
     required this.createdAt,
-    required this.periority,
+    required this.priority,
   });
-  String title;
-  String description;
-  bool isDone;
-  DateTime createdAt;
-  int periority;
-  Map<String, dynamic> tojson(TaskModel task) {
+
+  Map<String, dynamic> toJson() {
     return {
-      "title": task.title,
-      "description": task.description,
-      "isDone": task.isDone,
-      "createdAt": task.createdAt.toIso8601String(),
-      "periority": task.periority,
+      "title": title,
+      "description": description,
+      "isDone": isDone,
+      "createdAt": createdAt,
+      "priority": priority,
     };
   }
 
-  TaskModel.fromJson(Map<String, dynamic> json)
-    : this(
-        createdAt: DateTime.parse(json["createdAt"]),
-        description: json["description"],
-        isDone: json["isDone"],
-        periority: json["periority"],
-        title: json["title"],
-      );
-}
-
-
-void main() {
-  final task = TaskModel(
-    title: "Task 1",
-    description: "This is the first task",
-    isDone: false,
-    createdAt: DateTime.now(),
-    periority: 1,
-  );
-
-  final json = task.tojson(task);
-  print(json);
-
-  final newTask = TaskModel.fromJson(json);
-  print(newTask.title);
+  factory TaskModel.fromJson(Map<String, dynamic> json, String id) {
+    return TaskModel(
+      id: id,
+      title: json["title"],
+      description: json["description"],
+      isDone: json["isDone"],
+      priority: json["priority"],
+      createdAt: (json["createdAt"] as Timestamp).toDate(),
+    );
+  }
 }

@@ -1,16 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tasky/core/network/data/state_model.dart';
-import 'package:tasky/core/network/firebase/firebase_app.dart';
 import 'package:tasky/core/utils/app_colors/color_model.dart';
 import 'package:tasky/core/utils/app_font_size/font_size_model.dart';
 import 'package:tasky/core/widgets/bottom_content.dart';
 import 'package:tasky/core/widgets/text_form_feild_widget.dart';
-import 'package:tasky/features/auth/data/user_model.dart';
-import 'package:tasky/features/auth/screens/login_screen.dart';
-import 'package:tasky/features/auth/widget/material_button_widget.dart';
-import 'package:tasky/features/home/screens/home_screen.dart';
-import 'package:tasky/models/validator_model.dart';
+import 'package:tasky/features/auth/view/widget/material_button_widget.dart';
+import 'package:tasky/features/home/view/screens/home_screen.dart';
+import 'package:tasky/core/network/data/models/validator_model.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -20,7 +15,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  @override
   late TextEditingController username;
   late TextEditingController email;
   late TextEditingController password;
@@ -131,30 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   data: "Register",
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      var result = await FireBase.register(
-                        email: email.text,
-                        password: password.text,
-                      );
-                      switch (result) {
-                        case Success():
-                          await FireBase.addUser(
-                            UserdData(
-                              id: FirebaseAuth.instance.currentUser!.uid,
-                              name: username.text,
-                              email: email.text,
-                              password: password.text,
-                            ),
-                          );
-                          Navigator.of(
-                            context,
-                          ).pushNamed(LoginScreen.routeName);
-                          break;
-                        case Erorr():
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(result.message)),
-                          );
-                          break;
-                      }
+                     
                     }
                   },
                 ),

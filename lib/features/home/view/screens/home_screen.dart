@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tasky/core/utils/assets_icon/icon_model.dart';
 import 'package:tasky/core/utils/assets_image/image_model.dart';
-import 'package:tasky/features/auth/screens/login_screen.dart';
-import 'package:tasky/features/home/widget/bottom_sheet.dart';
+import 'package:tasky/features/auth/view/screens/login_screen.dart';
+import 'package:tasky/features/home/view/widget/bottom_sheet.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

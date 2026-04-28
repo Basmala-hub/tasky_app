@@ -5,10 +5,10 @@ import 'package:tasky/core/utils/app_colors/color_model.dart';
 import 'package:tasky/core/utils/app_font_size/font_size_model.dart';
 import 'package:tasky/core/widgets/bottom_content.dart';
 import 'package:tasky/core/widgets/text_form_feild_widget.dart';
-import 'package:tasky/features/auth/screens/register_screen.dart';
-import 'package:tasky/features/auth/widget/material_button_widget.dart';
-import 'package:tasky/features/home/screens/home_screen.dart';
-import 'package:tasky/models/validator_model.dart';
+import 'package:tasky/features/auth/view/screens/register_screen.dart';
+import 'package:tasky/features/auth/view/widget/material_button_widget.dart';
+import 'package:tasky/features/home/view/screens/home_screen.dart';
+import 'package:tasky/core/network/data/models/validator_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
