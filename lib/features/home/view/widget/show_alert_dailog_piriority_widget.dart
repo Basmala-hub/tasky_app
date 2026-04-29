@@ -4,7 +4,7 @@ import 'package:tasky/core/utils/app_font_size/font_size_model.dart';
 import 'package:tasky/core/utils/assets_icon/icon_model.dart';
 
 class ShowAlertDailogWidget extends StatefulWidget {
-  ShowAlertDailogWidget({super.key});
+ const ShowAlertDailogWidget({super.key});
 
   @override
   State<ShowAlertDailogWidget> createState() => _ShowAlertDailogWidgetState();
@@ -45,12 +45,15 @@ class _ShowAlertDailogWidgetState extends State<ShowAlertDailogWidget> {
                 setState(() {
                   selectedIndex = e;
                 });
+                Navigator.pop(context, e);
               },
             );
           }).toList(),
         ),
+      
       ),
     );
+    
   }
 }
 

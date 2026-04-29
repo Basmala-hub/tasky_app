@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskModel {
-  final String id;
+   String ?id;
   final String title;
   final String description;
   final bool isDone;
   final DateTime createdAt;
   final int priority;
 
-  TaskModel({
-    required this.id,
+  TaskModel({this.id,
     required this.title,
     required this.description,
     required this.isDone,
