@@ -9,8 +9,14 @@ class HomeCubit extends Cubit<HomeState> {
   List<TaskModel> completedTasks = [];
   //!load tasks
   Future<void> loadTasks() async {
-    tasks = await FireBase.getTasks();
-    emit(HomeSuccessState(tasks));
+    try {
+      final result = await FireBase.getTasks();
+
+      tasks = result;
+      emit(HomeSuccessState(tasks));
+    } catch (e) {
+      emit(HomeErrorState(e.toString()));
+    }
   }
 
   //! add task

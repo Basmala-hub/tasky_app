@@ -21,8 +21,10 @@ void showModalBottomSheetContinair(
   );
 }
 
+// ignore: must_be_immutable
 class BottomSheetAddTaskWidget extends StatefulWidget {
-  const BottomSheetAddTaskWidget({super.key});
+  BottomSheetAddTaskWidget({super.key, this.task});
+  TaskModel? task;
 
   @override
   State<BottomSheetAddTaskWidget> createState() => _BottomSheetAddTaskState();
@@ -31,53 +33,84 @@ class BottomSheetAddTaskWidget extends StatefulWidget {
 class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
   var selectedTime = DateTime.now();
   int priority = 1;
+
   TextEditingController name = TextEditingController();
   TextEditingController description = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// 🔥 لو Edit
+    if (widget.task != null) {
+      name.text = widget.task!.title;
+      description.text = widget.task!.description;
+      priority = widget.task!.priority;
+
+      selectedTime = DateTime.fromMillisecondsSinceEpoch(
+        widget.task!.createdAt,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: 27),
+      padding: const EdgeInsets.symmetric(horizontal: 27),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text("Add Task"),
+          Text(widget.task == null ? "Add Task" : "Edit Task"),
+
+          const SizedBox(height: 12),
+
           TextField(
             controller: name,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Enter task name",
               border: OutlineInputBorder(),
             ),
           ),
-          SizedBox(height: 12),
+
+          const SizedBox(height: 12),
+
           TextField(
             controller: description,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Description",
               border: OutlineInputBorder(),
             ),
           ),
-          Row(
-            mainAxisAlignment: .spaceBetween,
 
+          const SizedBox(height: 12),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              /// 🔹 time + priority
               Row(
-                mainAxisAlignment: .spaceBetween,
                 children: [
                   InkWell(
                     child: Image.asset(IconModel.timer),
                     onTap: () async {
-                      selectedTime =
-                          await selectTime(context) ?? DateTime.now();
+                      final picked = await selectTime(context);
+
+                      if (picked != null) {
+                        setState(() {
+                          selectedTime = picked;
+                        });
+                      }
                     },
                   ),
-                  SizedBox(width: 5),
+
+                  const SizedBox(width: 8),
+
                   InkWell(
                     child: Image.asset(IconModel.flag),
                     onTap: () async {
                       final result = await showDialog(
                         context: context,
-                        builder: (context) {
-                          return const ShowAlertDailogWidget();
-                        },
+                        builder: (_) => const ShowAlertDailogWidget(),
                       );
 
                       if (result != null) {
@@ -89,18 +122,39 @@ class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
                   ),
                 ],
               ),
+
+              /// 🔥 send (add / edit)
               InkWell(
                 child: Image.asset(IconModel.send),
                 onTap: () {
-                  final task = TaskModel(
-                    title: name.text,
-                    description: description.text,
-                    isDone: false,
-                    createdAt: selectedTime,
-                    priority: priority,
-                  );
-                  context.read<HomeCubit>().addTask(task);
-                  Navigator.of(context).pop();
+                  if (name.text.isEmpty) return;
+
+                  if (widget.task == null) {
+                    /// ➕ Add
+                    final task = TaskModel(
+                      title: name.text,
+                      description: description.text,
+                      isDone: false,
+                      createdAt: selectedTime.millisecondsSinceEpoch,
+                      priority: priority,
+                    );
+
+                    context.read<HomeCubit>().addTask(task);
+                  } else {
+                    /// ✏️ Edit
+                    final updatedTask = TaskModel(
+                      id: widget.task!.id,
+                      title: name.text,
+                      description: description.text,
+                      isDone: widget.task!.isDone,
+                      createdAt: selectedTime.millisecondsSinceEpoch,
+                      priority: priority,
+                    );
+
+                    context.read<HomeCubit>().editTask(updatedTask);
+                  }
+
+                  Navigator.pop(context);
                 },
               ),
             ],
@@ -110,4 +164,3 @@ class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
     );
   }
 }
-
