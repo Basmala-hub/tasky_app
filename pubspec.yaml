@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^6.4.0
   cloud_firestore: ^6.3.0
   flutter_bloc: ^9.1.1
+  shared_preferences: ^2.5.5
   
 
 dev_dependencies:

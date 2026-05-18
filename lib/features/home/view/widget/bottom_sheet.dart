@@ -41,7 +41,6 @@ class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
   void initState() {
     super.initState();
 
-    /// 🔥 لو Edit
     if (widget.task != null) {
       name.text = widget.task!.title;
       description.text = widget.task!.description;
@@ -87,14 +86,12 @@ class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              /// 🔹 time + priority
               Row(
                 children: [
                   InkWell(
                     child: Image.asset(IconModel.timer),
                     onTap: () async {
                       final picked = await selectTime(context);
-
                       if (picked != null) {
                         setState(() {
                           selectedTime = picked;
@@ -102,17 +99,14 @@ class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
                       }
                     },
                   ),
-
                   const SizedBox(width: 8),
-
                   InkWell(
                     child: Image.asset(IconModel.flag),
                     onTap: () async {
                       final result = await showDialog(
                         context: context,
-                        builder: (_) => const ShowAlertDailogWidget(),
+                        builder: (context) => const ShowAlertDailogWidget(),
                       );
-
                       if (result != null) {
                         setState(() {
                           priority = result;
@@ -122,15 +116,11 @@ class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
                   ),
                 ],
               ),
-
-              /// 🔥 send (add / edit)
               InkWell(
                 child: Image.asset(IconModel.send),
                 onTap: () {
                   if (name.text.isEmpty) return;
-
                   if (widget.task == null) {
-                    /// ➕ Add
                     final task = TaskModel(
                       title: name.text,
                       description: description.text,
@@ -140,8 +130,8 @@ class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
                     );
 
                     context.read<HomeCubit>().addTask(task);
+                    Navigator.pop(context, true);
                   } else {
-                    /// ✏️ Edit
                     final updatedTask = TaskModel(
                       id: widget.task!.id,
                       title: name.text,
@@ -152,9 +142,10 @@ class _BottomSheetAddTaskState extends State<BottomSheetAddTaskWidget> {
                     );
 
                     context.read<HomeCubit>().editTask(updatedTask);
+                    Navigator.pop(context, true);
                   }
 
-                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 },
               ),
             ],

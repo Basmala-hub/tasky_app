@@ -13,9 +13,7 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
     final task = ModalRoute.of(context)?.settings.arguments as TaskModel;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -30,7 +28,6 @@ class DetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             Row(
               children: [
                 Checkbox(
@@ -49,10 +46,8 @@ class DetailsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-
             Text(task.description),
             const SizedBox(height: 20),
-
             _buildInfoRow(
               icon: IconModel.timer,
               label: "Task Time :",
@@ -64,9 +59,7 @@ class DetailsScreen extends StatelessWidget {
               label: "Task Priority :",
               value: "${task.priority}",
             ),
-
             const Spacer(),
-
             InkWell(
               onTap: () {
                 context.read<HomeCubit>().deleteTask(task.id ?? "");
@@ -84,16 +77,17 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
             Center(
               child: MateralButtonWidget(
                 data: "Edit Task",
-                onPressed: () {
-                  showModalBottomSheet(
+                onPressed: () async {
+                  final result = await showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     builder: (context) => BottomSheetAddTaskWidget(task: task),
                   );
+                  if (result == true) {
+                  }
                 },
                 padding: 100,
               ),

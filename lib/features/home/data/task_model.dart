@@ -5,7 +5,7 @@ class TaskModel {
   final String title;
   final String description;
   bool isDone;
-  final int createdAt; 
+  final int createdAt;
   final int priority;
 
   TaskModel({
@@ -23,12 +23,11 @@ class TaskModel {
       "title": title,
       "description": description,
       "isDone": isDone,
-      "createdAt": createdAt, 
+      "createdAt": createdAt,
       "priority": priority,
     };
   }
 
-  
   factory TaskModel.fromJson(Map<String, dynamic> json, String id) {
     return TaskModel(
       id: id,
@@ -37,7 +36,6 @@ class TaskModel {
       isDone: json["isDone"] ?? false,
       priority: json["priority"] ?? 1,
 
-      
       createdAt: json["createdAt"] is Timestamp
           ? (json["createdAt"] as Timestamp).millisecondsSinceEpoch
           : json["createdAt"] ?? DateTime.now().millisecondsSinceEpoch,
@@ -51,6 +49,6 @@ class TaskModel {
   String get formattedDate {
     final date = createdDate;
     return "${date.day}/${date.month}/${date.year} - "
-        "${date.hour}:${date.minute.toString().padLeft(2, '0')}";
+        "${date.hour}:${date.minute.toString()}";
   }
 }

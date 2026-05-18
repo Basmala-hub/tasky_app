@@ -7,6 +7,8 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitialState());
   List<TaskModel> tasks = [];
   List<TaskModel> completedTasks = [];
+   bool isSearching = false;
+    List<TaskModel> searchResults = [];
   //!load tasks
   Future<void> loadTasks() async {
     try {
@@ -31,11 +33,20 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   //! search task
+ 
   Future<void> searchTasks(String query) async {
+    if (query.isEmpty) {
+      isSearching = false;
+      emit(HomeSuccessState(tasks));
+      return;
+    }
+
     emit(HomeLoadingState());
     try {
       final result = await FireBase.searchTasks(query);
-      emit(HomeSuccessState(result));
+      searchResults = result;
+      isSearching = true;
+      emit(HomeSuccessState(searchResults));
     } catch (e) {
       emit(HomeErrorState(e.toString()));
     }
@@ -74,4 +85,13 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeErrorState(e.toString()));
     }
   }
+  //!fliteration by data
+  filterByDate({required String date}){
+
+  }
+  //!clear search
+  void clearSearch() {
+  isSearching = false;
+  emit(HomeSuccessState(tasks));
+}
 }
