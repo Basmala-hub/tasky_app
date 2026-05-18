@@ -85,7 +85,7 @@ class FireBase {
   }
 
   //!get tasks function
- static Future<List<TaskModel>> getTasks() async {
+  static Future<List<TaskModel>> getTasks() async {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
@@ -105,7 +105,7 @@ class FireBase {
   }
 
   //!search tasks function
-static  Future<List<TaskModel>> searchTasks(String query) async {
+  static Future<List<TaskModel>> searchTasks(String query) async {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
@@ -133,7 +133,7 @@ static  Future<List<TaskModel>> searchTasks(String query) async {
   }
 
   //!edit task function
-static  Future<void> editTask(TaskModel task) async {
+  static Future<void> editTask(TaskModel task) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       throw Exception("User not logged in");
@@ -151,7 +151,7 @@ static  Future<void> editTask(TaskModel task) async {
   }
 
   //!complete task function
- static Future<TaskModel> completeTasks(TaskModel task) async {
+  static Future<TaskModel> completeTasks(TaskModel task) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       throw Exception("User not logged in");
@@ -171,7 +171,7 @@ static  Future<void> editTask(TaskModel task) async {
   }
 
   //!delete task function
-static  Future<void> deleteTask(String id) async {
+  static Future<void> deleteTask(String id) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       throw Exception("User not logged in");
@@ -183,12 +183,11 @@ static  Future<void> deleteTask(String id) async {
           .doc(user.uid)
           .collection("tasks")
           .doc(id);
-          await deletedTask.delete();
+      await deletedTask.delete();
     } catch (e) {
       throw Exception("Error delete task$e");
     }
   }
 
   //!filter tasks function
-
 }

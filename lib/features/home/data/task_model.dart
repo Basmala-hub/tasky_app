@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskModel {
-  final String id;
+  String? id;
   final String title;
   final String description;
-  final bool isDone;
-  final DateTime createdAt;
+  bool isDone;
+  final int createdAt;
   final int priority;
 
   TaskModel({
-    required this.id,
+    this.id,
     required this.title,
     required this.description,
     required this.isDone,
@@ -17,6 +17,7 @@ class TaskModel {
     required this.priority,
   });
 
+  /// 🔥 تحويل لـ Firebase
   Map<String, dynamic> toJson() {
     return {
       "title": title,
@@ -30,11 +31,24 @@ class TaskModel {
   factory TaskModel.fromJson(Map<String, dynamic> json, String id) {
     return TaskModel(
       id: id,
-      title: json["title"],
-      description: json["description"],
-      isDone: json["isDone"],
-      priority: json["priority"],
-      createdAt: (json["createdAt"] as Timestamp).toDate(),
+      title: json["title"] ?? "",
+      description: json["description"] ?? "",
+      isDone: json["isDone"] ?? false,
+      priority: json["priority"] ?? 1,
+
+      createdAt: json["createdAt"] is Timestamp
+          ? (json["createdAt"] as Timestamp).millisecondsSinceEpoch
+          : json["createdAt"] ?? DateTime.now().millisecondsSinceEpoch,
     );
+  }
+
+  DateTime get createdDate {
+    return DateTime.fromMillisecondsSinceEpoch(createdAt);
+  }
+
+  String get formattedDate {
+    final date = createdDate;
+    return "${date.day}/${date.month}/${date.year} - "
+        "${date.hour}:${date.minute.toString()}";
   }
 }

@@ -6,5 +6,6 @@ abstract class IconModel {
   static const String search = "assets/icons/search-normal.png";
   static const String logo = "assets/icons/app_icon_logo.png";
   static const String logOut = "assets/icons/logout.png";
+  static const String leading="assets/icons/leading.png";
 
 }
