@@ -40,34 +40,34 @@ This project follows:
 
 ## 📸 Screenshots
 ### Splash Screen
-![Splash Screen](assets/screenshots/Intro.png)
+![Splash Screen](assets/Screenshots/Intro.png)
 ### Onboarding Screen1
-![Onboarding Screen](assets/screenshots/Onboading.png)
+![Onboarding Screen](assets/Screenshots/Onboading.png)
 ### Onboarding Screen2
-![Onboarding Screen2](assets/screenshots/Onboading_(2).png)
+![Onboarding Screen2](assets/Screenshots/Onboading_(2).png)
 ### Onboarding Screen3
-![Onboarding Screen3](assets/screenshots/Onboading_(3).png)
+![Onboarding Screen3](assets/Screenshots/Onboading_(3).png)
 ### Register Screen
-![Register Screen](assets/screenshots/Register_Screen.png)
+![Register Screen](assets/Screenshots/Register_Screen.png)
 ### Login Screen
-![Login Screen](assets/screenshots/Login_Screen.png)
+![Login Screen](assets/Screenshots/Login_Screen.png)
 ### Choice date
-![Choice date](assets/screenshots/chocie_data.png)
+![Choice date](assets/Screenshots/chocie_data.png)
 ### Choice Periority
-![Choice Periority](assets/screenshots/choice_periority.png)
+![Choice Periority](assets/Screenshots/choice_periority.png)
 
 
 ### Home Screen
-![Home Screen](assets/screenshots/home.png)
+![Home Screen](assets/Screenshots/home.png)
 
 ### Add Task Screen
-![Add Task Screen](assets/screenshots/edit_bar.png)
+![Add Task Screen](assets/Screenshots/edit_bar.png)
 
 ### Edit Task Screen
-![Edit Task Screen](assets/screenshots/edit_task.png)
+![Edit Task Screen](assets/Screenshots/edit_task.png)
 
 ### Search Screen
-![Search Screen](assets/screenshots/task_screen.png)
+![Search Screen](assets/Screenshots/task_screen.png)
 
 ---
 
